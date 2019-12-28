@@ -1,10 +1,9 @@
-package sample.board;
+package stratego.board;
 
 import javafx.scene.paint.Color;
-import sample.Army;
-import sample.pieces.Piece;
-import sample.pieces.PieceFactory;
-import sample.pieces.PieceType;
+import stratego.pieces.Army;
+import stratego.pieces.Piece;
+import stratego.pieces.PieceFactory;
 
 /*
 Top left = (0,0)

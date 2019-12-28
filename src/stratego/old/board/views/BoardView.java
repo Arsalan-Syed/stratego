@@ -1,6 +1,6 @@
-package sample.board.views;
+package stratego.board.views;
 
-import sample.board.Coordinate;
+import stratego.board.Coordinate;
 
 public class BoardView {
 

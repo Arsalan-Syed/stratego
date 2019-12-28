@@ -1,11 +1,11 @@
-package sample;
+package stratego.pieces;
 
 import javafx.scene.paint.Color;
-import sample.board.Coordinate;
-import sample.pieces.Piece;
-import sample.pieces.PieceFactory;
-import sample.pieces.PieceInitialisationData;
-import sample.pieces.PieceType;
+import stratego.board.Coordinate;
+import stratego.pieces.Piece;
+import stratego.pieces.PieceFactory;
+import stratego.pieces.PieceInitialisationData;
+import stratego.pieces.PieceType;
 
 import java.util.*;
 import java.util.stream.Collectors;

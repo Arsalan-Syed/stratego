@@ -1,19 +1,22 @@
-package sample.scenes;
+package stratego.scenes;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
-import sample.SceneManager;
+import stratego.game.Game;
+
+import java.util.HashMap;
 
 public class StartScene implements GameScene {
     private final int SCENE_WIDTH = 600;
     private final int SCENE_HEIGHT = 300;
 
     //@Override
-    public Scene createGameScene() {
+    public Scene initialise() {
         Text text = new Text();
         text.setFont(new Font(30));
         text.setText("Stratego");
@@ -22,11 +25,7 @@ public class StartScene implements GameScene {
 
         playGameButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 event -> {
-                    try {
-                        SceneManager.getSceneManagerInstance().switchScene(SceneType.GAMEPLAY);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    handlePlayGameButtonClick();
                 });
 
         Button howToPlayButton = new Button("How to Play");
@@ -37,5 +36,18 @@ public class StartScene implements GameScene {
         gridPane.add(howToPlayButton, 0, 2);
 
         return new Scene(gridPane);
+    }
+
+    @Override
+    public Parent update(HashMap<String, Object> params) {
+        return null;
+    }
+
+    private void handlePlayGameButtonClick(){
+        try {
+            Game.getGameInstance().play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

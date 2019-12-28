@@ -1,10 +1,10 @@
-package sample.board;
+package stratego.board;
 
 import javafx.scene.paint.Color;
-import sample.board.views.BoardSquareView;
-import sample.board.views.BoardView;
-import sample.pieces.Piece;
-import sample.pieces.PieceType;
+import stratego.board.views.BoardSquareView;
+import stratego.board.views.BoardView;
+import stratego.pieces.Piece;
+import stratego.pieces.PieceType;
 
 public class BoardViewGenerator {
 
@@ -21,15 +21,13 @@ public class BoardViewGenerator {
         BoardSquareView[][] boardViewGrid = new BoardSquareView[rows][columns];
         for(int row = 0; row < rows; row++){
             for(int column = 0; column < columns; column++){
-                BoardSquareView boardSquareView = new BoardSquareView();
                 Coordinate coordinate = new Coordinate(row, column);
 
                 Piece piece = board.getPieceAtCoordinate(coordinate);
                 Color color = obtainColor(piece, coordinate);
                 String text = obtainText(piece);
 
-                boardSquareView.setColor(color);
-                boardSquareView.setText(text);
+                BoardSquareView boardSquareView = new BoardSquareView(color, text);
                 boardViewGrid[row][column] = boardSquareView;
             }
         }

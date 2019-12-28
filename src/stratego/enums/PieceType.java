@@ -1,4 +1,4 @@
-package sample.pieces;
+package stratego.old.pieces;
 
 public enum PieceType {
     MARSHALL, GENERAL, COLONEL, MAJOR, CAPTAIN, LIEUTENANT,

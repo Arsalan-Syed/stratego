@@ -1,4 +1,4 @@
-package sample.pieces;
+package stratego.pieces;
 
 public class PieceInitialisationData {
     private int rank;

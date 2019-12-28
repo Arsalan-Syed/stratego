@@ -1,7 +1,6 @@
-package sample.pieces;
+package stratego.pieces;
 
 import javafx.scene.paint.Color;
-import sample.board.Coordinate;
 
 import java.util.HashMap;
 

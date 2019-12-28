@@ -1,4 +1,4 @@
-package sample.board;
+package stratego.old.board;
 
 public class Coordinate {
     private int row;
