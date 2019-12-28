@@ -10,7 +10,6 @@ import stratego.models.GameState;
 
 public class SidePanelView extends Group {
 
-    private final Font TEXT_FONT = new Font(18);
     private GameState gameState;
 
     public SidePanelView(GameState gameState){
@@ -22,12 +21,13 @@ public class SidePanelView extends Group {
         sidePanelBackground.setHeight(400);
 
         Text turnText = new Text();
+        Font TEXT_FONT = new Font(18);
         turnText.setFont(TEXT_FONT);
         turnText.setText(obtainCurrentTeamTurnText());
 
         Text unitText = new Text();
         unitText.setFont(TEXT_FONT);
-        unitText.setText("----");
+        unitText.setText("TODO");
 
         this.getChildren().add(sidePanelBackground);
         this.getChildren().add(turnText);

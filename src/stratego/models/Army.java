@@ -24,16 +24,15 @@ public class Army {
     public Army(Team team, PieceFactory pieceFactory){
         this.team = team;
         this.pieceFactory = pieceFactory;
-        createPieces();
+        pieces = createPieces();
     }
-
 
     public List<Piece> getPieces() {
         return pieces.values().stream().flatMap(List::stream).collect(Collectors.toList());
     }
 
-    private void createPieces() {
-        pieces = new HashMap<>();
+    private Map<PieceType, List<Piece>> createPieces() {
+        Map<PieceType, List<Piece>> pieces = new HashMap<>();
 
         for(PieceType pieceType: PieceType.values()){
             int quantity = pieceType.getQuantity();
@@ -46,6 +45,7 @@ public class Army {
 
             pieces.put(pieceType, pieceList);
         }
+        return pieces;
     }
 
 }

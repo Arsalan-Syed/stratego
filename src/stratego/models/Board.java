@@ -113,5 +113,12 @@ public class Board {
     private boolean squaresAreAdjacent(BoardSquare square1, BoardSquare square2){
         return false;
     }
+
+    public void selectSquare(Coordinate coordinate, GameState gameState) {
+        if(selectedBoardSquare == null) {
+            selectedBoardSquare = getBoardSquareAtCoordinate(coordinate);
+            selectedBoardSquare.toggleHighlighted();
+        }
+    }
 }
 

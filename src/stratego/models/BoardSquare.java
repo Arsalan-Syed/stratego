@@ -7,6 +7,7 @@ import stratego.enums.BoardSquareType;
 @Getter
 public class BoardSquare {
     private Color fillColor;
+    private Color highlightColor;
     private Color textColor;
     private Piece piece;
     private boolean highlighted;
@@ -23,15 +24,26 @@ public class BoardSquare {
     }
 
     private void updateColors() {
+        updateFillColor();
+        updateHighlightColor();
+        updateTextColor();
+    }
+
+    private void updateFillColor(){
         if(boardSquareType == BoardSquareType.WATER){
             fillColor = Color.LIGHTBLUE;
         } else if(piece != null){
-            Color teamColor = piece.obtainTeamColor();
-            fillColor = highlighted ? Color.YELLOW : teamColor;
+            fillColor = piece.obtainTeamColor();
         } else{
             fillColor = Color.LIGHTGREEN;
         }
+    }
 
+    private void updateHighlightColor(){
+        highlightColor = highlighted ? Color.ORANGE : fillColor;
+    }
+
+    private void updateTextColor(){
         textColor = highlighted ? Color.RED : Color.RED;
     }
 
