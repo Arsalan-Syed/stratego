@@ -1,15 +1,15 @@
-package sample;
+package stratego;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import sample.game.Game;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception{
-        Game game = Game.getGameInstance();
+    public void start(Stage stage) {
+        Game game = new Game();
         game.setup(stage);
+        game.play();
     }
 
     public static void main(String[] args) {

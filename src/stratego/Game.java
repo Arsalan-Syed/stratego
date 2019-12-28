@@ -1,55 +1,54 @@
-package stratego.old.game;
+package stratego;
 
 import javafx.stage.Stage;
-import stratego.old.board.Board;
-import stratego.old.board.views.BoardSquareView;
-import stratego.old.scenes.SceneType;
+import stratego.controllers.BoardSquareController;
+import stratego.enums.Team;
+import stratego.models.Board;
+import stratego.models.GameState;
+import stratego.views.BoardView;
+import stratego.views.GameView;
 
 public class Game {
 
-    private static Game gameInstance;
-    private SceneManager sceneManager;
     private Board board;
-    BoardSquareView selectedSquare;
+    private GameState gameState;
 
-    private boolean gameOver;
-    private boolean isRedsTurn;
+    private GameView gameView;
+    private BoardSquareController boardSquareController;
 
-    private Game(){}
+    private Stage stage;
 
-    public static Game getGameInstance(){
-        if(gameInstance == null){
-            gameInstance = new Game();
-        }
-        return gameInstance;
-    }
+    public Game(){}
 
-    public void setup(Stage stage) throws Exception {
+    public void setup(Stage stage) {
         String APPLICATION_TITLE = "Stratego Game";
         stage.setTitle(APPLICATION_TITLE);
+        this.stage = stage;
 
-        sceneManager = new SceneManager(stage);
-        sceneManager.switchScene(SceneType.START);
+        initialiseModels();
+        initialiseViews();
+        initialiseControllers();
     }
 
-    public void play() throws Exception {
-        sceneManager.switchScene(SceneType.GAMEPLAY);
+    public void play() {
+        gameView.render();
     }
 
-    private boolean isGameOver(){
-        return false;
+    private void initialiseModels(){
+        board = new Board();
+
+        Team startingTeam = Team.RED;
+        gameState = GameState.builder()
+                .activeTeam(startingTeam)
+                .build();
     }
 
-    public void updateSelectedBoardSquare(BoardSquareView boardSquareView) {
-        if(this.selectedSquare == null){
-            this.selectedSquare = boardSquareView;
-        } else if(this.selectedSquare == boardSquareView){
-            this.selectedSquare = null;
-        }
-        refreshGameView();
+    private void initialiseViews() {
+        gameView = new GameView(stage , board, gameState);
     }
 
-    private void refreshGameView() {
-
+    private void initialiseControllers() {
+        BoardView boardView = gameView.getBoardView();
+        boardSquareController = new BoardSquareController(board, boardView, gameState);
     }
 }

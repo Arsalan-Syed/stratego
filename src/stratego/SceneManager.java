@@ -1,19 +1,14 @@
-package stratego.old.game;
+package stratego;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import stratego.old.board.BoardViewGenerator;
-import stratego.old.board.views.BoardView;
-import stratego.old.exceptions.UnrecognizedSceneTypeException;
-import stratego.old.scenes.GameScene;
-import stratego.old.scenes.GameplayScene;
-import stratego.old.scenes.SceneType;
-import stratego.old.scenes.StartScene;
+import stratego.exceptions.UnrecognizedSceneTypeException;
+import stratego.enums.SceneType;
 
 import java.util.HashMap;
 
 public class SceneManager {
-
+/*
     private Stage stage;
     private GameScene currentScene;
     private Scene scene;
@@ -47,5 +42,5 @@ public class SceneManager {
                 throw new UnrecognizedSceneTypeException();
         }
     }
-
+*/
 }

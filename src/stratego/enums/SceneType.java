@@ -1,4 +1,5 @@
 package stratego.enums;
 
-public interface SceneType {
+public enum SceneType {
+    START, GAMEPLAY, ENDGAME
 }
