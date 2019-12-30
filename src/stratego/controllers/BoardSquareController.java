@@ -7,6 +7,8 @@ import stratego.models.GameState;
 import stratego.views.BoardSquareView;
 import stratego.views.BoardView;
 
+import java.util.List;
+
 
 public class BoardSquareController {
     private BoardView boardView;
@@ -18,16 +20,19 @@ public class BoardSquareController {
         this.board = board;
         this.gameState = gameState;
 
-        for(BoardSquareView boardSquareView : boardView.getBoardSquareViews()){
-            boardSquareView.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                    event -> {handle(boardSquareView);}
-                    );
-        }
+        List<BoardSquareView> boardSquareViews = boardView.getBoardSquareViews();
+        boardSquareViews.forEach(this::addEventHandler);
     }
 
-    public void handle(BoardSquareView rectangle){
+    private void addEventHandler(BoardSquareView boardSquareView){
+        boardSquareView.addEventHandler(
+                MouseEvent.MOUSE_CLICKED, event -> onClick(boardSquareView)
+        );
+    }
+
+    private void onClick(BoardSquareView boardSquareView){
         try {
-            board.selectSquare(rectangle.getCoordinate(), gameState);
+            board.selectSquare(boardSquareView.getCoordinate(), gameState);
         } catch (UnrecognizedDirectionException e) {
             e.printStackTrace();
         }
