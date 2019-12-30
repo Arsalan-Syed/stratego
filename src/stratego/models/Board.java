@@ -1,10 +1,17 @@
 package stratego.models;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
+import sample.UnrecognizedDirectionException;
 import stratego.PieceFactory;
 import stratego.enums.BoardSquareType;
+import stratego.enums.Direction;
 import stratego.enums.Team;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -35,8 +42,7 @@ public class Board {
     public void updateSelectedSquare(Coordinate coordinate, GameState gameState) {
         BoardSquare boardSquare = getBoardSquareAtCoordinate(coordinate);
 
-        boolean boardSquareIsWater = boardSquare.getBoardSquareType() == BoardSquareType.WATER;
-        if(boardSquareIsWater){
+        if(boardSquare.isWaterSquare()){
             return;
         }
 
@@ -109,16 +115,71 @@ public class Board {
         }
     }
 
-    //TODO
-    private boolean squaresAreAdjacent(BoardSquare square1, BoardSquare square2){
-        return false;
-    }
-
-    public void selectSquare(Coordinate coordinate, GameState gameState) {
+    public void selectSquare(Coordinate coordinate, GameState gameState) throws UnrecognizedDirectionException {
         if(selectedBoardSquare == null) {
             selectedBoardSquare = getBoardSquareAtCoordinate(coordinate);
-            selectedBoardSquare.toggleHighlighted();
+            if(selectedBoardSquare.getPiece()!= null) {
+                if (gameState.getActiveTeam() == selectedBoardSquare.getPiece().getTeam()) {
+                    selectedBoardSquare.toggleHighlighted();
+                    highlightAdjacentSquares(coordinate);
+                }
+            }
         }
+    }
+
+    private void highlightAdjacentSquares(Coordinate coordinate) throws UnrecognizedDirectionException {
+        BoardSquare currentBoardSquare = getBoardSquareAtCoordinate(coordinate);
+        List<BoardSquare> adjacentBoardSquares = obtainAdjacentBoardSquares(coordinate);
+        for(BoardSquare adjacentBoardSquare: adjacentBoardSquares){
+            if(currentBoardSquare.canMovePieceToAdjacentBoardSquare(adjacentBoardSquare)){
+                adjacentBoardSquare.toggleHighlighted();
+            }
+        }
+    }
+
+    private List<BoardSquare> obtainAdjacentBoardSquares(Coordinate coordinate) throws UnrecognizedDirectionException {
+        BoardSquare north = obtainAdjacentBoardSquare(Direction.NORTH, coordinate);
+        BoardSquare east = obtainAdjacentBoardSquare(Direction.EAST, coordinate);
+        BoardSquare south = obtainAdjacentBoardSquare(Direction.SOUTH, coordinate);
+        BoardSquare west = obtainAdjacentBoardSquare(Direction.WEST, coordinate);
+
+        List<BoardSquare> adjacentBoardSquares = Lists.newArrayList(north, east, south, west);
+        return adjacentBoardSquares
+                .stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    private BoardSquare obtainAdjacentBoardSquare(Direction direction, Coordinate coordinate) throws UnrecognizedDirectionException {
+        int newRow = coordinate.getRow();
+        int newColumn = coordinate.getColumn();
+
+        switch (direction){
+            case NORTH:
+                newRow = newRow - 1;
+                break;
+            case EAST:
+                newColumn = newColumn + 1;
+                break;
+            case SOUTH:
+                newRow = newRow + 1;
+                break;
+            case WEST:
+                newColumn = newColumn - 1;
+                break;
+            default:
+                throw new UnrecognizedDirectionException();
+        }
+
+        if(isOutOfBounds(newRow) || isOutOfBounds(newColumn)){
+            return null;
+        }
+
+        return boardSquares[newRow][newColumn];
+    }
+
+    private boolean isOutOfBounds(int index) {
+        return index < 0 || index > 9;
     }
 }
 

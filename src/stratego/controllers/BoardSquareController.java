@@ -1,6 +1,7 @@
 package stratego.controllers;
 
 import javafx.scene.input.MouseEvent;
+import sample.UnrecognizedDirectionException;
 import stratego.models.Board;
 import stratego.models.GameState;
 import stratego.views.BoardSquareView;
@@ -24,8 +25,12 @@ public class BoardSquareController {
         }
     }
 
-    public void handle(BoardSquareView rectangle) {
-        board.selectSquare(rectangle.getCoordinate(), gameState);
+    public void handle(BoardSquareView rectangle){
+        try {
+            board.selectSquare(rectangle.getCoordinate(), gameState);
+        } catch (UnrecognizedDirectionException e) {
+            e.printStackTrace();
+        }
         boardView.update();
     }
 }

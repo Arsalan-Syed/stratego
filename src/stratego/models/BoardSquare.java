@@ -57,4 +57,22 @@ public class BoardSquare {
         this.piece = null;
         return extractedPiece;
     }
+
+    public boolean isWaterSquare(){
+        return boardSquareType == BoardSquareType.WATER;
+    }
+
+    boolean canMovePieceToAdjacentBoardSquare(BoardSquare otherBoardSquare) {
+        Piece currentBoardSquarePiece = this.getPiece();
+        Piece otherBoardSquarePiece = otherBoardSquare.getPiece();
+
+        if(currentBoardSquarePiece != null && otherBoardSquarePiece != null){
+            if(currentBoardSquarePiece.getTeam() == otherBoardSquarePiece.getTeam()){
+                return false;
+            }
+        }
+
+        boolean otherBoardSquareIsWater = otherBoardSquare.isWaterSquare();
+        return !otherBoardSquareIsWater;
+    }
 }
