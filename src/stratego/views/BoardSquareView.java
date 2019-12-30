@@ -1,14 +1,13 @@
 package stratego.views;
 
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.Getter;
 import stratego.models.BoardSquare;
 import stratego.models.Coordinate;
-import sun.plugin.dom.css.Rect;
+import stratego.models.Piece;
 
 @Getter
 public class BoardSquareView extends StackPane {
@@ -22,10 +21,7 @@ public class BoardSquareView extends StackPane {
     public BoardSquareView(Coordinate coordinate, BoardSquare boardSquare){
         this.coordinate = coordinate;
 
-        rankText = new Text("");
-        rankText.setFont(TEXT_FONT);
-        rankText.setFill(boardSquare.getTextColor());
-        rankText.setMouseTransparent(true);
+        updateText(boardSquare);
 
         borderRectangle = new Rectangle();
         borderRectangle.setHeight(35);
@@ -43,8 +39,20 @@ public class BoardSquareView extends StackPane {
         this.getChildren().addAll(borderRectangle, rectangle, rankText);
     }
 
+    private void updateText(BoardSquare boardSquare) {
+        rankText = new Text("");
+        rankText.setFont(TEXT_FONT);
+        rankText.setFill(boardSquare.getTextColor());
+        rankText.setMouseTransparent(true);
+        Piece piece = boardSquare.getPiece();
+        if(piece != null){
+            rankText.setText(Integer.toString(piece.getRank()));
+        }
+    }
+
     public void update(BoardSquare boardSquare) {
         borderRectangle.setFill(boardSquare.getHighlightColor());
         rectangle.setFill(boardSquare.getFillColor());
+        updateText(boardSquare);
     }
 }

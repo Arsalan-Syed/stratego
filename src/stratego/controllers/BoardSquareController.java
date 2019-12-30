@@ -1,8 +1,9 @@
 package stratego.controllers;
 
 import javafx.scene.input.MouseEvent;
-import sample.UnrecognizedDirectionException;
+import stratego.BoardHighlighter;
 import stratego.models.Board;
+import stratego.models.Coordinate;
 import stratego.models.GameState;
 import stratego.views.BoardSquareView;
 import stratego.views.BoardView;
@@ -14,28 +15,34 @@ public class BoardSquareController {
     private BoardView boardView;
     private Board board;
     private GameState gameState;
+    private BoardHighlighter boardHighlighter;
+
 
     public BoardSquareController(Board board, BoardView boardView, GameState gameState){
         this.boardView = boardView;
         this.board = board;
         this.gameState = gameState;
+        this.boardHighlighter = new BoardHighlighter(board);
 
         List<BoardSquareView> boardSquareViews = boardView.getBoardSquareViews();
-        boardSquareViews.forEach(this::addEventHandler);
-    }
-
-    private void addEventHandler(BoardSquareView boardSquareView){
-        boardSquareView.addEventHandler(
-                MouseEvent.MOUSE_CLICKED, event -> onClick(boardSquareView)
-        );
-    }
-
-    private void onClick(BoardSquareView boardSquareView){
-        try {
-            board.selectSquare(boardSquareView.getCoordinate(), gameState);
-        } catch (UnrecognizedDirectionException e) {
-            e.printStackTrace();
+        for(BoardSquareView rectangle : boardSquareViews){
+            rectangle.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    event -> {
+                        handle(rectangle);}
+            );
         }
+    }
+
+    private void handle(BoardSquareView boardSquareView){
+        Coordinate coordinate = boardSquareView.getCoordinate();
+
+        if(board.getSelectedBoardSquare() == null){
+            board.selectSquare(coordinate);
+            boardHighlighter.highlightSquares(coordinate, gameState);
+        } else{
+            board.movePiece(coordinate);
+        }
+
         boardView.update();
     }
 }

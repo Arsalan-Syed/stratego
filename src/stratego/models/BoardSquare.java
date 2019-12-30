@@ -11,10 +11,10 @@ public class BoardSquare {
     private Color textColor;
     private Piece piece;
     private boolean highlighted;
-    private BoardSquareType boardSquareType;
+    private final Coordinate coordinate;
 
-    public BoardSquare(BoardSquareType boardSquareType){
-        this.boardSquareType = boardSquareType;
+    public BoardSquare(Coordinate coordinate){
+        this.coordinate = coordinate;
         updateColors();
     }
 
@@ -30,7 +30,7 @@ public class BoardSquare {
     }
 
     private void updateFillColor(){
-        if(boardSquareType == BoardSquareType.WATER){
+        if(obtainBoardSquareType() == BoardSquareType.WATER){
             fillColor = Color.LIGHTBLUE;
         } else if(piece != null){
             fillColor = piece.obtainTeamColor();
@@ -44,7 +44,7 @@ public class BoardSquare {
     }
 
     private void updateTextColor(){
-        textColor = highlighted ? Color.RED : Color.RED;
+        textColor = Color.WHITE;
     }
 
     public void setPiece(Piece piece) {
@@ -59,20 +59,29 @@ public class BoardSquare {
     }
 
     public boolean isWaterSquare(){
-        return boardSquareType == BoardSquareType.WATER;
+        return obtainBoardSquareType() == BoardSquareType.WATER;
     }
 
-    boolean canMovePieceToAdjacentBoardSquare(BoardSquare otherBoardSquare) {
-        Piece currentBoardSquarePiece = this.getPiece();
-        Piece otherBoardSquarePiece = otherBoardSquare.getPiece();
+    public boolean canMovePieceToAdjacentBoardSquare(BoardSquare otherBoardSquare) {
+        Piece currentPiece = this.getPiece();
+        Piece otherPiece = otherBoardSquare.getPiece();
 
-        if(currentBoardSquarePiece != null && otherBoardSquarePiece != null){
-            if(currentBoardSquarePiece.getTeam() == otherBoardSquarePiece.getTeam()){
+        if(currentPiece != null && otherPiece != null){
+            if(currentPiece.getTeam() == otherPiece.getTeam()){
                 return false;
             }
         }
 
         boolean otherBoardSquareIsWater = otherBoardSquare.isWaterSquare();
         return !otherBoardSquareIsWater;
+    }
+
+    private BoardSquareType obtainBoardSquareType() {
+        boolean lakeRow = coordinate.getRow() == 4 || coordinate.getRow() == 5;
+        boolean lakeColumn =
+                coordinate.getColumn() ==  2 || coordinate.getColumn() ==  3 ||
+                        coordinate.getColumn() ==  6 || coordinate.getColumn() ==  7;
+
+        return lakeRow && lakeColumn ? BoardSquareType.WATER : BoardSquareType.LAND;
     }
 }

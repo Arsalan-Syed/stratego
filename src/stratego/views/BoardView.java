@@ -1,7 +1,6 @@
 package stratego.views;
 
 import javafx.scene.Group;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import stratego.models.Board;
@@ -16,10 +15,9 @@ public class BoardView extends Group {
 
     private Board board;
 
-    private Rectangle background;
     private BoardSquareView[][] gridSquares;
-    private int rows = 10;
-    private int columns = 10;
+    private int rows = Board.ROWS;
+    private int columns = Board.COLUMNS;
 
     public List<BoardSquareView> getBoardSquareViews() {
         List<BoardSquareView> list = new ArrayList<>();
@@ -59,7 +57,7 @@ public class BoardView extends Group {
     }
 
     private void initialiseBackground() {
-        background = new Rectangle();
+        Rectangle background = new Rectangle();
         background.setFill(Color.BEIGE);
         background.setWidth(400);
         background.setHeight(400);

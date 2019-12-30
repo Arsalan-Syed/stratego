@@ -13,4 +13,10 @@ public class Coordinate {
         this.row = row;
         this.column = column;
     }
+
+    public boolean isOutOfBounds() {
+        boolean rowIsOutOfBounds = row < 0 || row > 9;
+        boolean columnIsOutOfBounds = column < 0 || column > 9;
+        return rowIsOutOfBounds || columnIsOutOfBounds;
+    }
 }
