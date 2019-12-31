@@ -5,12 +5,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import lombok.Getter;
+import stratego.BoardObserver;
+import stratego.models.Board;
 import stratego.models.BoardSquare;
 import stratego.models.Coordinate;
 import stratego.models.Piece;
 
 @Getter
-public class BoardSquareView extends StackPane {
+public class BoardSquareView extends StackPane implements BoardObserver {
 
     private Coordinate coordinate;
     private final Font TEXT_FONT = new Font(30);
@@ -50,7 +52,9 @@ public class BoardSquareView extends StackPane {
         }
     }
 
-    public void update(BoardSquare boardSquare) {
+    @Override
+    public void update(Board board) {
+        BoardSquare boardSquare = board.getBoardSquareAtCoordinate(coordinate);
         borderRectangle.setFill(boardSquare.getHighlightColor());
         rectangle.setFill(boardSquare.getFillColor());
         updateText(boardSquare);

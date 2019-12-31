@@ -6,50 +6,38 @@ import stratego.enums.BoardSquareType;
 
 @Getter
 public class BoardSquare {
-    private Color fillColor;
-    private Color highlightColor;
-    private Color textColor;
     private Piece piece;
     private boolean highlighted;
     private final Coordinate coordinate;
 
     public BoardSquare(Coordinate coordinate){
         this.coordinate = coordinate;
-        updateColors();
     }
 
     public void toggleHighlighted(){
         highlighted = !highlighted;
-        updateColors();
     }
 
-    private void updateColors() {
-        updateFillColor();
-        updateHighlightColor();
-        updateTextColor();
-    }
-
-    private void updateFillColor(){
+    public Color getFillColor(){
         if(obtainBoardSquareType() == BoardSquareType.WATER){
-            fillColor = Color.LIGHTBLUE;
+            return Color.LIGHTBLUE;
         } else if(piece != null){
-            fillColor = piece.obtainTeamColor();
+            return piece.obtainTeamColor();
         } else{
-            fillColor = Color.LIGHTGREEN;
+            return Color.LIGHTGREEN;
         }
     }
 
-    private void updateHighlightColor(){
-        highlightColor = highlighted ? Color.ORANGE : fillColor;
+    public Color getHighlightColor(){
+        return highlighted ? Color.ORANGE : getFillColor();
     }
 
-    private void updateTextColor(){
-        textColor = Color.WHITE;
+    public Color getTextColor(){
+        return Color.WHITE;
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        updateColors();
     }
 
     public Piece extractPiece(){

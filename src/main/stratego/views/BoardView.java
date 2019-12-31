@@ -15,13 +15,13 @@ public class BoardView extends Group {
 
     private Board board;
 
-    private BoardSquareView[][] gridSquares;
+    private BoardSquareView[][] boardSquares;
     private int rows = Board.ROWS;
     private int columns = Board.COLUMNS;
 
     public List<BoardSquareView> getBoardSquareViews() {
         List<BoardSquareView> list = new ArrayList<>();
-        for (BoardSquareView[] array : gridSquares) {
+        for (BoardSquareView[] array : boardSquares) {
             list.addAll(Arrays.asList(array));
         }
         return list;
@@ -39,17 +39,19 @@ public class BoardView extends Group {
     }
 
     private void initialiseAllGridSquares() {
-        gridSquares = new BoardSquareView[rows][columns];
+        boardSquares = new BoardSquareView[rows][columns];
 
         for(int row = 0; row < rows; row++){
             for(int column = 0; column < columns; column++){
                 Coordinate coordinate = new Coordinate(row, column);
                 BoardSquare boardSquare = board.getBoardSquareAtCoordinate(coordinate);
                 BoardSquareView boardSquareView = initialiseGridSquare(coordinate, boardSquare);
-                gridSquares[row][column] = boardSquareView;
+                boardSquares[row][column] = boardSquareView;
+                board.register(boardSquareView);
                 this.getChildren().add(boardSquareView);
             }
         }
+
     }
 
     private BoardSquareView initialiseGridSquare(Coordinate coordinate, BoardSquare boardSquare) {
@@ -64,17 +66,6 @@ public class BoardView extends Group {
         background.toBack();
 
         this.getChildren().add(background);
-    }
-
-    public void update(){
-        for(int row = 0; row < rows; row++){
-            for(int column = 0; column < columns; column++){
-                Coordinate coordinate = new Coordinate(row, column);
-                BoardSquare boardSquare = board.getBoardSquareAtCoordinate(coordinate);
-                BoardSquareView boardSquareView = gridSquares[row][column];
-                boardSquareView.update(boardSquare);
-            }
-        }
     }
 
 }

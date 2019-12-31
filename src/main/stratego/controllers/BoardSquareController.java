@@ -42,7 +42,5 @@ public class BoardSquareController {
         } else{
             board.movePiece(coordinate);
         }
-
-        boardView.update();
     }
 }

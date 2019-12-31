@@ -2,10 +2,12 @@ package stratego.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import stratego.BoardObserver;
 import stratego.PieceFactory;
 import stratego.enums.Direction;
 import stratego.enums.Team;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -25,12 +27,28 @@ public class Board {
     private BoardSquare selectedBoardSquare;
     private PieceFactory pieceFactory;
 
+    private List<BoardObserver> observers;
+
     public Board(){
         pieceFactory = new PieceFactory();
+        observers = new ArrayList<>();
+
         initialiseBoardSquares();
         initialiseArmies();
         placeArmyPiecesOnBoard(redArmy);
         placeArmyPiecesOnBoard(blueArmy);
+    }
+
+    public void register(BoardObserver observer){
+        observers.add(observer);
+    }
+
+    public void unregister(BoardObserver observer){
+        observers.remove(observer);
+    }
+
+    public void notifyObservers(){
+        observers.forEach(observer -> observer.update(this));
     }
 
     public BoardSquare getBoardSquareAtCoordinate(Coordinate coordinate) {
@@ -39,6 +57,7 @@ public class Board {
 
     public void selectSquare(Coordinate coordinate) {
         selectedBoardSquare = getBoardSquareAtCoordinate(coordinate);
+        notifyObservers();
     }
 
     public void movePiece(Coordinate coordinate){
@@ -46,6 +65,7 @@ public class Board {
             Piece piece = selectedBoardSquare.extractPiece();
             BoardSquare newBoardSquare = getBoardSquareAtCoordinate(coordinate);
             newBoardSquare.setPiece(piece);
+            notifyObservers();
         }
     }
 
