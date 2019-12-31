@@ -1,5 +1,6 @@
 package stratego;
 
+import com.google.common.collect.Lists;
 import javafx.stage.Stage;
 import stratego.controllers.BoardSquareController;
 import stratego.enums.Team;
@@ -40,6 +41,7 @@ public class Game {
         Team startingTeam = Team.RED;
         gameState = GameState.builder()
                 .activeTeam(startingTeam)
+                .observers(Lists.newArrayList())
                 .build();
     }
 

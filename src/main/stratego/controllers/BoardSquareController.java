@@ -42,7 +42,9 @@ public class BoardSquareController {
         } else{
             board.movePiece(coordinate);
             boardHighlighter.reset();
-            //if successfully moved piece: gameState.toggleActiveTeam();
+            //if successfully moved piece:
+            gameState.toggleActiveTeam();
+            gameState.notifyObservers();
         }
     }
 }
