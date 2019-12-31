@@ -23,6 +23,10 @@ public class BoardSquareView extends StackPane implements BoardObserver {
     public BoardSquareView(Coordinate coordinate, BoardSquare boardSquare){
         this.coordinate = coordinate;
 
+        rankText = new Text("");
+        rankText.setFont(TEXT_FONT);
+        rankText.setMouseTransparent(true);
+        rankText.setFill(boardSquare.getTextColor());
         updateText(boardSquare);
 
         borderRectangle = new Rectangle();
@@ -42,14 +46,9 @@ public class BoardSquareView extends StackPane implements BoardObserver {
     }
 
     private void updateText(BoardSquare boardSquare) {
-        rankText = new Text("");
-        rankText.setFont(TEXT_FONT);
-        rankText.setFill(boardSquare.getTextColor());
-        rankText.setMouseTransparent(true);
         Piece piece = boardSquare.getPiece();
-        if(piece != null){
-            rankText.setText(Integer.toString(piece.getRank()));
-        }
+        String rankTextContent = piece != null ? Integer.toString(piece.getRank()) : "";
+        rankText.setText(rankTextContent);
     }
 
     @Override

@@ -41,6 +41,8 @@ public class BoardSquareController {
             boardHighlighter.highlightSquares(coordinate, gameState);
         } else{
             board.movePiece(coordinate);
+            boardHighlighter.reset();
+            //if successfully moved piece: gameState.toggleActiveTeam();
         }
     }
 }

@@ -43,10 +43,6 @@ public class Board {
         observers.add(observer);
     }
 
-    public void unregister(BoardObserver observer){
-        observers.remove(observer);
-    }
-
     public void notifyObservers(){
         observers.forEach(observer -> observer.update(this));
     }

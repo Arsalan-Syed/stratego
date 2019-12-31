@@ -9,4 +9,8 @@ import stratego.enums.Team;
 public class GameState {
     Team activeTeam;
     boolean gameOver;
+
+    public void toggleActiveTeam(){
+        activeTeam = activeTeam == Team.RED ? Team.BLUE : Team.RED;
+    }
 }

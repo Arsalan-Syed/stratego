@@ -20,6 +20,17 @@ public class BoardHighlighter {
         BoardSquare selectedBoardSquare = board.getBoardSquareAtCoordinate(coordinate);
         highlightSelectedSquare(selectedBoardSquare, gameState);
         highlightAdjacentSquares(selectedBoardSquare, gameState);
+        board.notifyObservers();
+    }
+
+    public void reset() {
+        BoardSquare[][] boardSquares = board.getBoardSquares();
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                boardSquares[i][j].setHighlighted(false);
+            }
+        }
+        board.notifyObservers();
     }
 
     private void highlightSelectedSquare(BoardSquare boardSquare, GameState gameState) {

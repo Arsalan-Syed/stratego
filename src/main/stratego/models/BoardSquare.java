@@ -2,9 +2,11 @@ package stratego.models;
 
 import javafx.scene.paint.Color;
 import lombok.Getter;
+import lombok.Setter;
 import stratego.enums.BoardSquareType;
 
 @Getter
+@Setter
 public class BoardSquare {
     private Piece piece;
     private boolean highlighted;
